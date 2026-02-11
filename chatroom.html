@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICCIB | Secure Chat Room</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<style>
+:root {
+--bg-dark:#121821;
+--card-dark:#1c2531;
+--accent-gold:#ffcc00;
+--text-gray:#a0aab7;
+--navy-blue:#1a2a44;
+}
+
+body{
+margin:0;
+font-family:'Segoe UI',Roboto,sans-serif;
+background:var(--bg-dark);
+color:white;
+display:flex;
+height:100vh;
+overflow:hidden;
+}
+
+/* Sidebar */
+.sidebar{
+width:300px;
+background:var(--card-dark);
+border-right:1px solid #2d3a4d;
+display:flex;
+flex-direction:column;
+padding:20px;
+transition:0.3s;
+z-index:50;
+}
+
+.sidebar h2{
+font-size:1.2rem;
+margin-bottom:20px;
+}
+
+.close-sidebar{
+display:none;
+font-size:20px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+.chat-history-item{
+display:flex;
+align-items:center;
+padding:12px;
+background:rgba(255,255,255,0.03);
+border-radius:8px;
+margin-bottom:10px;
+cursor:pointer;
+border:1px solid transparent;
+}
+
+.chat-history-item:hover{
+border-color:var(--accent-gold);
+}
+
+.avatar{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#444;
+margin-right:12px;
+}
+
+/* Main */
+.main-chat{
+flex:1;
+display:flex;
+flex-direction:column;
+position:relative;
+}
+
+.chat-header{
+padding:20px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #2d3a4d;
+}
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+.chat-messages{
+flex:1;
+padding:40px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.msg{
+max-width:70%;
+padding:15px 20px;
+border-radius:12px;
+font-size:0.95rem;
+line-height:1.5;
+word-wrap:break-word;
+}
+
+.msg.bot{
+align-self:flex-end;
+background:var(--navy-blue);
+border:2px solid var(--accent-gold);
+box-shadow:0 0 15px rgba(255,204,0,0.2);
+}
+
+.msg.user{
+align-self:flex-start;
+background:#2d3a4d;
+}
+
+.chat-input-area{
+padding:30px 40px;
+background:var(--bg-dark);
+}
+
+.input-wrapper{
+background:#1c2531;
+border:1px solid var(--accent-gold);
+border-radius:8px;
+display:flex;
+padding:10px 15px;
+align-items:center;
+}
+
+input{
+flex:1;
+background:transparent;
+border:none;
+color:white;
+outline:none;
+padding:10px;
+font-size:1rem;
+}
+
+.send-btn{
+background:var(--accent-gold);
+border:none;
+padding:10px 25px;
+border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.send-btn:hover{
+background:#e6b800;
+}
+
+.footer-note{
+text-align:center;
+font-size:0.8rem;
+color:var(--text-gray);
+margin-top:15px;
+}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:900px){
+
+.sidebar{
+position:fixed;
+left:-100%;
+top:0;
+height:100%;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.close-sidebar{
+display:block;
+}
+
+.menu-btn{
+display:block;
+}
+
+.chat-header{
+padding:15px 20px;
+}
+
+.chat-messages{
+padding:20px;
+}
+
+.chat-input-area{
+padding:15px 20px;
+}
+
+.msg{
+max-width:90%;
+font-size:0.9rem;
+}
+
+body{
+flex-direction:column;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+<div class="close-sidebar" id="closeSidebar">❌ Close</div>
+<h2>Previous Chats</h2>
+
+<div class="chat-history-item">
+<div class="avatar"></div>
+<div>
+<div style="font-size:0.9rem;font-weight:bold;">Case #ICB-2026-01</div>
+<div style="font-size:0.8rem;color:var(--text-gray);">Investigating...</div>
+</div>
+</div>
+</aside>
+
+<main class="main-chat">
+
+<header class="chat-header">
+<div style="display:flex;align-items:center;gap:15px;">
+<div class="menu-btn" id="menuBtn">☰</div>
+<img src="unnamed (16).jpg" style="height:40px;border-radius:91px;">
+<span style="letter-spacing:1px;font-weight:bold;">
+International Cyber Crime Investigation Bureau
+</span>
+</div>
+<span style="font-size:1.2rem;">🔒</span>
+</header>
+
+<div class="chat-messages" id="chat-box">
+<div class="msg bot">
+Hello. How can the Bureau assist your investigation today?
+</div>
+</div>
+
+<div class="chat-input-area">
+<form id="message-form" class="input-wrapper">
+<input type="text" id="msg-input" placeholder="Type your message..." autocomplete="off">
+<button type="submit" class="send-btn">Send</button>
+</form>
+<p class="footer-note">All communications are encrypted and confidential.</p>
+</div>
+
+</main>
+
+<script>
+const guestId="Guest_"+Math.random().toString(36).substr(2,9);
+
+const chatBox=document.getElementById("chat-box");
+const messageForm=document.getElementById("message-form");
+const msgInput=document.getElementById("msg-input");
+
+const sidebar=document.getElementById("sidebar");
+const menuBtn=document.getElementById("menuBtn");
+const closeSidebar=document.getElementById("closeSidebar");
+
+menuBtn.onclick=()=>sidebar.classList.add("active");
+closeSidebar.onclick=()=>sidebar.classList.remove("active");
+
+function appendMessage(text,type){
+const div=document.createElement("div");
+div.className=`msg ${type}`;
+div.textContent=text;
+chatBox.appendChild(div);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+// ===== URL MESSAGE =====
+const params=new URLSearchParams(window.location.search);
+const initialMessage=params.get('message');
+
+if(initialMessage){
+appendMessage(initialMessage,'bot');
+saveMessage(initialMessage,"guest");
+}
+
+// ===== SAVE MESSAGE =====
+function saveMessage(text,from){
+let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
+msgs.push({guestId,text,from});
+localStorage.setItem("chat_messages",JSON.stringify(msgs));
+}
+
+// ===== SEND =====
+messageForm.addEventListener("submit",(e)=>{
+e.preventDefault();
+const text=msgInput.value.trim();
+if(text){
+appendMessage(text,'bot');
+saveMessage(text,"guest");
+msgInput.value="";
+}
+});
+
+// ===== CHECK ADMIN REPLIES FAST =====
+setInterval(()=>{
+let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
+
+msgs.forEach(m=>{
+if(m.guestId===guestId && m.from==="admin" && !m.shown_user){
+appendMessage(m.text,"user");
+m.shown_user=true;
+}
+});
+
+localStorage.setItem("chat_messages",JSON.stringify(msgs));
+
+},500);
+</script>
+</body>
+</html>

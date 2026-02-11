@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Federal Bureau of Investigation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="main-header">
+    <nav class="navbar">
+         <div class="logo">
+            <img src="unnamed (16).jpg" alt="" style="width: 63px; height: 63px;   object-fit: fill; border-radius: 41px;  ">
+            <span class="fbi-text">International Cyber Crime investigation Bureau (ICCIB)</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="Login.html">Login</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <span class="search-icon">🔍</span>
+            <div class="menu-toggle" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="side-drawer" id="side-drawer">
+        <div class="drawer-header">
+            <span>MENU</span>
+            <span class="close-btn" id="close-drawer">&times;</span>
+        </div>
+        <ul class="drawer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="Login.html">Login</a></li>
+        </ul>
+    </header>
+<header class="contact-hero">
+    <div class="hero-overlay">
+        <h1 class="reveal">Contact the (ICCIB)</h1>
+        <p class="reveal delay-1">
+            If you are facing an emergency or immediate danger, contact local law enforcement immediately.
+        </p>
+    </div>
+</header>
+
+<main class="container">
+    <section class="contact-grid">
+        <div class="contact-card reveal delay-1 highlight">
+            <div class="icon pulse">📞</div>
+            <h3>Primary Hotline</h3>
+            <p class="big">+1 (272) 305-9315</p>
+            <span>(+1 (272) 305-9315)</span>
+        </div>
+
+        <div class="contact-card reveal delay-2">
+            <div class="icon pulse">✉️</div>
+            <h3>Email Submissions</h3>
+            <p class="big">Iccibureau@aol.com</p>
+            <span>Non-emergency reports </span>
+        </div>
+
+        <div class="contact-card reveal delay-3">
+            <div class="icon pulse">🏢</div>
+            <h3>Headquarters</h3>
+            <p class="big">Washington, D.C.</p>
+            <span>United States</span>
+        </div>
+    </section>
+</main>
+<footer class="main-footer">
+    <div class="footer-top">
+        <div class="footer-column  reveal-footer delay-1">
+            <h4>About</h4>
+            <p>
+                International Cyber Crime investigation Bureau (ICCIB) of Investigation protects and defends the United States
+                against terrorist and foreign intelligence threats, upholds and enforces
+                federal criminal laws, and provides leadership in criminal justice services.
+            </p>
+        </div>
+
+        <div class="footer-column  reveal-footer delay-2">
+            <h4>Quick Links</h4>
+            <ul  >
+                <li ><a href="#">Careers</a></li>
+                <li > <a href="#">News</a></li>
+                <li><a href="#">Most Wanted</a></li>
+                <li><a href="#">Freedom of Information Act</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column  reveal-footer delay-3">
+            <h4>Contact</h4>
+            <ul>
+                <li>📍 Washington, D.C.</li>
+                <li>📞 +1 (272) 305-9315</li>
+                <li>✉️ Iccibureau@aol.com</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-divider reveal-footer delay-4"></div>
+
+    <div class="footer-bottom   reveal-footer delay-5">
+        <div class="footer-brand">
+            <span class="footer-logo">International Cyber</span>
+            <span class="footer-text"> Crime investigation Bureau (ICCIB)</span>
+        </div>
+
+        <div class="footer-socials">
+            <span>f</span>
+            <span>X</span>
+            <span>in</span>
+            <span>yt</span>
+        </div>
+    </div>
+
+    <div class="footer-copy  reveal-footer delay-6" >
+        © 2026 Federal Bureau of Investigation. All rights reserved.
+    </div>
+</footer>
+
+<script>
+/* Reveal on scroll */
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, { threshold: 0.2 });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
+<style>
+    :root {
+    --fbi-navy: #002d62;
+    --fbi-red: #b22234;
+    --bg-light: #f4f7f9;
+    --text-dark: #333;
+}
+
+* {
+    box-sizing: border-box;
+}
+/* Navigation Styles */
+.main-header {
+    background-color: #000;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.fbi-text {
+    font-size: 1.0rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover { color: #ccc; }
+
+.nav-right { display: flex; align-items: center; gap: 20px; }
+
+/* Hamburger Button */
+.menu-toggle {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+}
+
+/* Side Drawer Styling */
+.side-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen */
+    width: 280px;
+    height: 100vh;
+    background-color: #111;
+    z-index: 1001;
+    transition: 0.4s ease;
+    padding: 20px;
+}
+
+.side-drawer.active { right: 0; }
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.close-btn { font-size: 2rem; cursor: pointer; }
+
+.drawer-links {
+    list-style: none;
+    margin-top: 30px;
+}
+
+.drawer-links li { margin: 20px 0; }
+
+.drawer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+}
+
+/* Responsive Logic: 780px */
+@media (max-width: 780px) {
+    .nav-links { display: none; } /* Hide desktop links */
+    .menu-toggle { display: flex; } /* Show hamburger */
+    
+    /* Adjust Hero Slider margin to account for fixed header */
+    .hero-slider { margin-top: 70px; }
+}
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #fff;
+    color: var(--text-dark);
+}
+
+/* ================= HERO ================= */
+
+.contact-hero {
+    height: 68vh;
+    min-height: 790px;
+    background: url("woman-police-officer-talking-landline-phone.jpg") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(0,0,0,0.6),
+        rgba(0,0,0,0.85)
+    );
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.hero-overlay h1 {
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.hero-overlay p {
+    background: var(--fbi-red);
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* ================= LAYOUT ================= */
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 80px 20px;
+}
+
+/* ================= CARDS ================= */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.contact-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    border-top: 5px solid #ccc;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.contact-card.highlight {
+    border-top-color: var(--fbi-navy);
+}
+
+.contact-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 60px rgba(0,45,98,0.25);
+}
+
+.contact-card h3 {
+    color: var(--fbi-navy);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.contact-card .big {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.contact-card span {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ================= ICONS ================= */
+
+.icon {
+    font-size: 3rem;
+}
+.logo{
+    display: flex;
+    align-items: center;
+}
+.logo span{
+    margin-left: 12px;
+}
+/* Subtle pulse */
+.pulse {
+    animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* ================= REVEAL ANIMATION ================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: all 0.9s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.15s; }
+.delay-2 { transition-delay: 0.3s; }
+.delay-3 { transition-delay: 0.45s; }
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+    .contact-hero {
+        height: 50vh;
+    }
+}
+
+.main-footer {
+    background-color: #0b0b0b;
+    color: #ccc;
+    padding: 60px 20px 30px;
+    font-size: 0.9rem;
+}
+/* Reveal animation base */
+.reveal-footer {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.reveal-footer.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+.footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column  h4::after{
+       content: "";
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+}
+
+.footer-column p {
+    line-height: 1.6;
+    color: #aaa;
+}
+
+.footer-column ul {
+   
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+      list-style: none;
+       list-style: none; text-decoration: none;   
+}
+.footer-column ul li a{
+     color: #fff;
+    
+       list-style: none; text-decoration: none;   
+
+}
+.footer-column ul li a::after {
+  color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+      list-style: none;
+}
+
+.footer-column ul li a:hover::after{
+    color: #fff;
+}
+
+/* Divider */
+.footer-divider {
+    height: 1px;
+    background-color: #222;
+    margin: 50px auto 30px;
+    max-width: 1200px;
+}
+
+/* Bottom Section */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.footer-text {
+    font-size: 0.85rem;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+/* Social Icons */
+.footer-socials span {
+    display: inline-block;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #aaa;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials span:hover {
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* Copyright */
+.footer-copy {
+    text-align: center;
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 20px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-socials span {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+</style>
+<script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+const closeBtn = document.getElementById('close-drawer');
+const sideDrawer = document.getElementById('side-drawer');
+
+// Open Menu
+menuBtn.addEventListener('click', () => {
+    sideDrawer.classList.add('active');
+});
+
+// Close Menu
+closeBtn.addEventListener('click', () => {
+    sideDrawer.classList.remove('active');
+});
+
+// Close when clicking outside the drawer
+window.addEventListener('click', (e) => {
+    if (e.target === sideDrawer) {
+        sideDrawer.classList.remove('active');
+    }
+});
+const footerElements = document.querySelectorAll('.reveal-footer');
+
+const footerObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, { threshold: 0.2 });
+
+footerElements.forEach(el => footerObserver.observe(el));
+</script>

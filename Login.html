@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICCIB | Admin Secure Access</title>
+    <style>
+        :root {
+            --iccib-navy: #0a192f;
+            --iccib-gold: #c5a059;
+            --iccib-glow: rgba(197, 160, 89, 0.3);
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #050a14;
+            /* Background image to mimic the "datacenter" vibe in your generation */
+            background-image: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), 
+                              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            background: rgba(10, 25, 47, 0.95);
+            border: 1px solid var(--iccib-gold);
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), 0 0 10px var(--iccib-glow);
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-seal {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            border: 2px solid var(--iccib-gold);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--iccib-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px var(--iccib-glow);
+        }
+
+        h1 {
+            color: white;
+            letter-spacing: 2px;
+            margin: 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        p.subtitle {
+            color: #8892b0;
+            font-size: 0.8rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #233554;
+            border-radius: 4px;
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--iccib-gold);
+            box-shadow: 0 0 8px var(--iccib-glow);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to bottom, #f0d597, #c5a059);
+            border: none;
+            border-radius: 4px;
+            color: #0a192f;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+        }
+
+        #error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .footer-logo {
+            margin-top: 30px;
+            font-size: 0.6rem;
+            color: #444;
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="logo-seal">ICCIB</div>
+    <h1>ADMIN LOGIN</h1>
+    <p class="subtitle">Secure Access Portal</p>
+
+    <form id="adminLoginForm">
+        <div class="input-group">
+            <input type="text" id="username" placeholder="USERNAME" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="PASSWORD" required>
+        </div>
+        <button type="submit" class="login-btn">LOGIN</button>
+        <p id="error-msg">Access Denied: Invalid Credentials</p>
+    </form>
+
+    <div class="footer-logo">DNA SECURITY SYSTEM</div>
+</div>
+
+<script>
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "12345";
+
+const loginForm = document.getElementById('adminLoginForm');
+const errorMsg = document.getElementById('error-msg');
+
+loginForm.addEventListener('submit',(e)=>{
+e.preventDefault();
+
+const username=document.getElementById('username').value.trim();
+const password=document.getElementById('password').value.trim();
+
+if(username===ADMIN_USER && password===ADMIN_PASS){
+
+// fake secure token
+const token="ICCIB_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+
+localStorage.setItem("admin_token",token);
+
+// redirect
+window.location.href="admin-chat.html";
+
+}else{
+
+errorMsg.style.display="block";
+setTimeout(()=>{
+errorMsg.style.display="none";
+},3000);
+
+}
+});
+</script>
+</body>
+</html>

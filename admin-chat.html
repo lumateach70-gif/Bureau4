@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICCIB Admin | Case Management</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<style>
+:root {
+--bg-dark:#121821;
+--card-dark:#1c2531;
+--accent-gold:#ffcc00;
+--text-gray:#a0aab7;
+--navy-blue:#1a2a44;
+}
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background-color:var(--bg-dark);
+color:white;
+display:flex;
+height:100vh;
+overflow:hidden;
+}
+
+/* ===== Sidebar ===== */
+.sidebar{
+width:320px;
+background:var(--card-dark);
+border-right:1px solid #2d3a4d;
+display:flex;
+flex-direction:column;
+padding:20px;
+transition:.3s;
+z-index:999;
+}
+
+.sidebar h2{
+font-size:1.1rem;
+margin-bottom:20px;
+}
+
+/* MOBILE SIDEBAR */
+.sidebar.mobile{
+position:fixed;
+left:-100%;
+top:0;
+height:100%;
+}
+
+.sidebar.mobile.active{
+left:0;
+}
+
+.close-sidebar{
+display:none;
+font-size:22px;
+cursor:pointer;
+Code Editorsmargin-bottom:10px;
+}
+
+.guest-item{
+display:flex;
+align-items:center;
+padding:15px;
+background:rgba(255,255,255,0.03);
+border-radius:10px;
+margin-bottom:12px;
+cursor:pointer;
+border:1px solid transparent;
+transition:.2s;
+}
+
+.guest-item:hover,.guest-item.active{
+background:rgba(255,204,0,0.05);
+border-color:var(--accent-gold);
+}
+
+.status-online{
+width:10px;
+height:10px;
+background:#00ff00;
+border-radius:50%;
+margin-left:auto;
+}
+
+/* ===== MAIN ===== */
+.admin-main{
+flex:1;
+display:flex;
+flex-direction:column;
+min-width:0;
+}
+
+.admin-header{
+padding:20px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #2d3a4d;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.menu-toggle{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+.chat-title{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:bold;
+}
+
+.chat-area{
+flex:1;
+padding:40px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+background-image:radial-gradient(circle at center,#161e29 0%,#121821 100%);
+}
+
+.msg{
+max-width:75%;
+padding:12px 18px;
+border-radius:12px;
+font-size:.9rem;
+word-break:break-word;
+}
+
+.msg.user{
+align-self:flex-start;
+background:#2d3a4d;
+border-radius:2px 12px 12px 12px;
+}
+
+.msg.admin{
+align-self:flex-end;
+background:var(--navy-blue);
+border:1px solid var(--accent-gold);
+box-shadow:0 0 10px rgba(255,204,0,.1);
+}
+
+.input-area{
+padding:25px 40px;
+}
+
+.input-box{
+background:#1c2531;
+border:1px solid #3d4a5d;
+border-radius:8px;
+display:flex;
+padding:10px 15px;
+}
+
+.input-box:focus-within{
+border-color:var(--accent-gold);
+}
+
+input{
+flex:1;
+background:transparent;
+border:none;
+color:white;
+outline:none;
+font-size:1rem;
+}
+
+.btn-send{
+background:var(--accent-gold);
+color:black;
+border:none;
+padding:8px 20px;
+border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.btn-close-case{
+background:var(--accent-gold);
+color:black;
+border:none;
+padding:5px 12px;
+border-radius:4px;
+font-size:.8rem;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1000px){
+
+.sidebar{
+position:fixed;
+left:-100%;
+top:0;
+height:100%;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.close-sidebar{
+display:block;
+}
+
+.menu-toggle{
+display:block;
+}
+
+.admin-header{
+padding:15px 20px;
+}
+
+.chat-area{
+padding:20px;
+}
+
+.input-area{
+padding:15px;
+}
+
+.msg{
+max-width:90%;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+<div class="close-sidebar" id="closeSidebar">✖</div>
+<h2>Active Chats</h2>
+<div id="guest-list"></div>
+</aside>
+
+<main class="admin-main">
+
+<header class="admin-header">
+
+<div style="display:flex;align-items:center;gap:10px;">
+<div class="menu-toggle" id="menuToggle">☰</div>
+
+<div class="chat-title">
+<span id="current-user-label">Select a user to begin</span>
+<span style="font-size:0.8rem;">🔒</span>
+</div>
+</div>
+
+<button class="btn-close-case">Close Case</button>
+
+</header>
+
+<div class="chat-area" id="admin-chat-box"></div>
+
+<div class="input-area">
+<form id="admin-form" class="input-box">
+<input type="text" id="admin-input" placeholder="Type your reply..." autocomplete="off">
+<button type="submit" class="btn-send">Send</button>
+</form>
+
+<p style="text-align:center;color:var(--text-gray);font-size:0.75rem;margin-top:10px;">
+Secure Encrypted Admin Channel
+</p>
+
+</div>
+
+</main>
+<script>
+let selectedGuestId=null;
+
+const chatBox=document.getElementById("admin-chat-box");
+const adminForm=document.getElementById("admin-form");
+const adminInput=document.getElementById("admin-input");
+const guestListDiv=document.getElementById("guest-list");
+
+// ===== APPEND =====
+function appendMessage(text,type){
+const div=document.createElement("div");
+div.className=`msg ${type}`;
+div.textContent=text;
+chatBox.appendChild(div);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+// ===== LOAD GUEST LIST =====
+function loadGuests(){
+let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
+let guests=[...new Set(msgs.map(m=>m.guestId))];
+
+guestListDiv.innerHTML="";
+
+guests.forEach(id=>{
+const div=document.createElement("div");
+div.className="guest-item";
+div.innerHTML=`<span>${id}</span><div class="status-online"></div>`;
+div.onclick=()=>selectGuest(id,div);
+guestListDiv.appendChild(div);
+});
+}
+
+// ===== SELECT =====
+function selectGuest(id,element){
+selectedGuestId=id;
+chatBox.innerHTML="";
+document.getElementById("current-user-label").textContent=`Chatting with: ${id}`;
+
+document.querySelectorAll('.guest-item').forEach(el=>el.classList.remove('active'));
+if(element)element.classList.add('active');
+}
+
+// ===== SEND =====
+adminForm.addEventListener("submit",(e)=>{
+e.preventDefault();
+const text=adminInput.value.trim();
+
+if(text && selectedGuestId){
+
+appendMessage(text,"admin");
+
+let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
+msgs.push({guestId:selectedGuestId,text,from:"admin"});
+localStorage.setItem("chat_messages",JSON.stringify(msgs));
+
+adminInput.value="";
+}
+});
+
+// ===== FAST UPDATE =====
+setInterval(()=>{
+
+loadGuests();
+
+if(!selectedGuestId) return;
+
+let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
+
+msgs.forEach(m=>{
+if(m.guestId===selectedGuestId && m.from==="guest" && !m.shown_admin){
+appendMessage(m.text,"user");
+m.shown_admin=true;
+}
+});
+
+localStorage.setItem("chat_messages",JSON.stringify(msgs));
+
+},500);
+
+// ===== MOBILE =====
+const sidebar=document.getElementById("sidebar");
+document.getElementById("menuToggle").onclick=()=>sidebar.classList.add("active");
+document.getElementById("closeSidebar").onclick=()=>sidebar.classList.remove("active");
+</script>
+</body>
+</html>

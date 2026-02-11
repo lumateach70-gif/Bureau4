@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FBI Style Hero Slider</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="main-header">
+    <nav class="navbar">
+        <div class="logo">
+            <img src="unnamed (16).jpg" alt="" style="width: 63px; height: 63px;   object-fit: fill; border-radius: 41px;  ">
+            <span class="fbi-text">International Cyber Crime investigation Bureau (ICCIB)</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="Login.html">Login</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <span class="search-icon">🔍</span>
+            <div class="menu-toggle" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="side-drawer" id="side-drawer">
+        <div class="drawer-header">
+            <span>MENU</span>
+            <span class="close-btn" id="close-drawer">&times;</span>
+        </div>
+        <ul class="drawer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+              <li><a href="Login.html">Login</a></li>
+        </ul>
+    </header>
+    <section class="hero-slider">
+        <div class="slides-container" id="slider">
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images (19).jpeg');">
+                <div class="content">
+                    <h1>MISSION FIRST</h1>
+                    <p>Together, We Deliver Comfort You Can Trust and Protection You Deserve.</p>
+                    
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('premium_photo-1661878265739-da90bc1af051.jpeg');">
+                <div class="content">
+                    <h1>JOIN OUR TEAM</h1>
+                    <p>Protecting our people is our primary responsibility..</p>
+                   
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('backpage-remissions-laptop-121525.jpg');">
+                <div class="content">
+                    <h1>LATEST NEWS</h1>
+                    <p>Stay informed about current investigations and safety alerts.</p>
+                  
+                </div>
+            </div>
+        </div>
+
+        <div class="dots-container">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+    </section>
+<section class="leadership-section reveal">
+    <h2 class="section-title">Leadership | Mission | Priorities</h2>
+    
+    <div class="card-grid">
+        <div class="info-card">
+            <img src="images (35).jpeg" alt="Director Kash Patel">
+            <div class="overlay">
+                <h3>STOPPING <br>CYBER CRIME</h3>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <img src="images (36).jpeg" alt="Co-Deputy Director Andrew Bailey">
+            <div class="overlay">
+                <h3>PROTECTING <br>THE DIGITAL WORLD.</h3>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <img src="images (28).jpeg" alt="Leadership and Structure">
+            <div class="overlay">
+                <h3>Leadership & Structure</h3>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <img src="unnamed (18).jpg" alt="Mission and Priorities">
+            <div class="overlay">
+                <h3>Mission & Priorities</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="action-section">
+    <h2 class="serif-title light">I Want To</h2>
+    <div class="action-grid">
+        <div class="action-item">
+            <div class="icon">💼</div> <p>Access informatio</p>
+        </div>
+        <div class="action-item">
+            <div class="icon">📱</div>
+            <p>manage services</p>
+        </div>
+        <div class="action-item">
+            <div class="icon">👤</div>
+            <p>contact us</p>
+        </div>
+        <div class="action-item">
+            <div class="icon">📄</div>
+            <p class="yellow-text">track updates</p>
+        </div>
+        <div class="action-item">
+            <div class="icon">✉️</div>
+            <p>get personal support</p>
+        </div>
+        <div class="action-item">
+            <div class="icon">🔍</div>
+            <p>receive dedicated</p>
+        </div>
+    </div>
+</section>
+
+<section class="media-stack">
+    <div class="media-card" style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url('what-we-investigate.png');">
+        <h2>News</h2>
+    </div>
+    <div class="media-card" style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url('woman-police-officer-talking-landline-phone.jpg');">
+        <h2>Podcasts</h2>
+    </div>
+    <a href="Investigation.html" style="list-style: none; text-decoration: none;">
+<div class="media-card" style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url('unnamed (17).jpg'); ">
+        <h2>What We Investigate</h2>
+    </div>
+    </a>
+    
+</section>
+<div class="chat-wrapper">
+    <div id="chat-preview" class="chat-preview-box">
+        <div class="preview-header">
+            <div class="header-info">
+               <span class="status-dot online"></span>
+                <strong>ICCIB Secure Support</strong>
+                <span class="shield-icon">🛡️</span>
+            </div>
+            <button id="close-preview">&times;</button>
+        </div>
+        
+        <div class="preview-body">
+            <div class="bot-label">BOT</div>
+            <div class="message-bubble">
+                <p>Hello. How can the Bureau assist your investigation today?</p>
+            </div>
+        </div>
+
+        <form class="preview-footer" id="preview-form">
+        <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+        <button type="submit" class="send-btn">Send</button>
+    </form>
+    </div>
+
+    <div id="chat-icon-trigger" class="main-chat-icon">
+          <span class=" online"></span>
+        <svg viewBox="0 0 24 24" width="30" height="30">
+            <path fill="white" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            <circle fill="white" cx="7" cy="9" r="1.25"/>
+            <circle fill="white" cx="12" cy="9" r="1.25"/>
+            <circle fill="white" cx="17" cy="9" r="1.25"/>
+        </svg>
+    </div>
+</div>
+<section class="testimonials-section reveal">
+    <h2 class="section-title">What People Say</h2>
+    <div class="testimonial-grid">
+        
+        <div class="testimonial-card">
+            <div class="quote-icon">“</div>
+            <p class="testimony-text">Working with this bureau has been a masterclass in professional integrity and precision. Their commitment to the mission is unmatched.</p>
+            <div class="profile-area">
+                <img src="images (31).jpeg" alt="James Wilson">
+                <div class="details">
+                    <span class="name">James Wilson</span>
+                    <span class="title">Chief of Operations</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="quote-icon">“</div>
+            <p class="testimony-text">The level of transparency and technical expertise provided during our joint task force operation was truly impressive. A reliable partner.</p>
+            <div class="profile-area">
+                <img src="images (33).jpeg" alt="Sarah Chen">
+                <div class="details">
+                    <span class="name">Sarah Chen</span>
+                    <span class="title">Senior Analyst</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="quote-icon">“</div>
+            <p class="testimony-text">Efficient, thorough, and dedicated. They don't just solve problems; they provide the framework for long-term security and stability.</p>
+            <div class="profile-area">
+                <img src="images (32).jpeg" alt="Robert Vance">
+                <div class="details">
+                    <span class="name">Robert Vance</span>
+                    <span class="title">Security Consultant</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="quote-icon">“</div>
+            <p class="testimony-text">In times of crisis, you need a team that remains calm and data-driven. That is exactly what we found here. Highly recommended.</p>
+            <div class="profile-area">
+                <img src="images (34).jpeg" alt="Elena Rodriguez">
+                <div class="details">
+                    <span class="name">Elena Rodriguez</span>
+                    <span class="title">Policy Advisor</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<footer class="main-footer">
+    <div class="footer-top">
+        <div class="footer-column  reveal-footer delay-1">
+            <h4>About</h4>
+            <p>
+                The International Cyber Crime investigation Bureau (ICCIB) of Investigation protects and defends the United States
+                against terrorist and foreign intelligence threats, upholds and enforces
+                federal criminal laws, and provides leadership in criminal justice services.
+            </p>
+        </div>
+
+        <div class="footer-column  reveal-footer delay-2">
+            <h4>Quick Links</h4>
+            <ul  >
+                <li ><a href="#">Careers</a></li>
+                <li > <a href="#">News</a></li>
+                <li><a href="#">Most Wanted</a></li>
+                <li><a href="#">Freedom of Information Act</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column  reveal-footer delay-3">
+            <h4>Contact</h4>
+            <ul>
+                <li>📍 Washington, D.C.</li>
+                <li>📞+1 (272) 305-9315</li>
+                <li>✉️ Iccibureau@aol.com</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-divider reveal-footer delay-4"></div>
+
+    <div class="footer-bottom   reveal-footer delay-5">
+        <div class="footer-brand">
+            <span class="footer-logo">(ICCIB)</span>
+            <span class="footer-text">International Cyber Crime investigation Bureau</span>
+        </div>
+
+        <div class="footer-socials">
+            <span>f</span>
+            <span>X</span>
+            <span>in</span>
+            <span>yt</span>
+        </div>
+    </div>
+
+    <div class="footer-copy  reveal-footer delay-6" >
+        © 2026 International Cyber Crime investigation Bureau (ICCIB) of Investigation. All rights reserved.
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    
+}
+body{
+    background-color: #f1f3f5;
+}
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 80vh; /* Adjust height as needed */
+    overflow: hidden;
+    background: #000;
+}
+
+.slides-container {
+    height: 100%;
+    width: 100%;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Typography */
+.content {
+    color: white;
+    max-width: 600px;
+}
+
+.content h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+.preview-footer input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.preview-footer input:focus {
+    border-color: var(--iccib-gold);
+}
+
+.user-bubble {
+    background: var(--iccib-navy);
+    color: white;
+    padding: 12px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    align-self: flex-end;
+    font-size: 14px;
+    max-width: 80%;
+    margin-left: auto; /* Pushes user message to the right */
+}
+
+.preview-body {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: white;
+    color: black;
+}
+
+/* Dots Positioning */
+.dots-container {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background-color: white;
+    transform: scale(1.2);
+}
+.leadership-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Georgia', serif;
+    color: #002d62; /* Classic navy blue */
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile/tablet */
+    gap: 20px;
+}
+
+/* On desktop, switch to 4 columns if you prefer, 
+   but the screenshot shows a 2x2 mobile stack */
+@media (min-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+.main-header {
+    animation: headerDrop 0.8s ease forwards;
+}
+
+@keyframes headerDrop {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.info-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5; /* Keeps cards uniform */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+}
+
+.info-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    transform: translateY(20px);
+    opacity: 0.9;
+    transition: all 0.4s ease;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    text-align: left;
+}
+
+.overlay h3 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+    font-family: sans-serif;
+}
+.info-card:hover .overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+/* General Styles */
+body { font-family: 'Arial', sans-serif; margin: 0; }
+.serif-title { 
+    font-family: 'Georgia', serif; 
+    color: #002d62; 
+    text-align: center; 
+    font-size: 2rem; 
+    margin: 40px 0;
+}
+.serif-title.light { color: white; margin-bottom: 50px; }
+
+/* Leadership Grid */
+.leadership-section { padding: 20px; max-width: 1100px; margin: auto; }
+.leader-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns like screenshot */
+    gap: 15px;
+}
+
+.card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1.2;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img { width: 100%; height: 100%; object-fit: cover; }
+
+.card-overlay {
+    position: absolute;
+    bottom: 0; width: 100%;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    color: white;
+}
+
+.card-overlay h3 { font-size: 1.1rem; margin: 0; line-height: 1.3; }
+
+/* Action Grid (Blue Section) */
+.action-section {
+    background-color: #203a73; /* Official Navy Blue */
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+     transition: transform 0.3s ease, opacity 0.3s ease;
+     
+}
+
+.icon { font-size: 50px; margin-bottom: 15px; } /* Temporary Emoji Icons */
+
+.action-item p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    max-width: 150px;
+}
+.action-item:hover {
+    transform: translateY(-4px);
+    opacity: 0.9;
+}
+.yellow-text { color: #ffcc00; font-weight: bold; }
+
+/* Responsive Desktop Tweak */
+@media (min-width: 768px) {
+    .action-grid { grid-template-columns: repeat(3, 1fr); }
+}
+:root {
+    --fbi-blue: #203a73;
+    --fbi-yellow: #ffcc00;
+}
+
+/* Header Styles */
+.serif-header {
+    font-family: 'Georgia', serif;
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+}
+.serif-header.light { color: white; }
+
+/* Actions Section */
+.actions-container {
+    background-color: var(--fbi-blue);
+    padding: 60px 20px;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.icon-box {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Use SVGs here for the crisp white/yellow look */
+}
+
+.action-card p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.highlight { color: var(--fbi-yellow); }
+
+/* Media Stack Section */
+.media-stack {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.media-card {
+    height: 420px;
+    width: 100%;
+    object-fit: fill;
+    border-radius: 15px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.media-card:hover { transform: scale(1.02); }
+
+.media-card h2 {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+:root {
+    --fbi-navy: #002d62;
+    --light-gray: #f8f9fa;
+    --text-color: #333;
+}
+
+.testimonials-section {
+    padding: 60px 20px;
+    background-color: var(--light-gray);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-family: 'Georgia', serif;
+    color: var(--fbi-navy);
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.quote-icon {
+    font-family: 'Georgia', serif;
+    font-size: 4rem;
+    color: var(--fbi-navy);
+    line-height: 1;
+    margin-bottom: -20px;
+    opacity: 0.2;
+}
+
+.testimony-text {
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+.profile-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-area img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--fbi-navy);
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: bold;
+    color: var(--fbi-navy);
+    font-size: 1rem;
+}
+
+.title {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Mobile Tweak */
+@media (max-width: 768px) {
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* Navigation Styles */
+.main-header {
+    background-color: #000;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.fbi-text {
+    font-size: 1.0rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover { color: #ccc; }
+
+.nav-right { display: flex; align-items: center; gap: 20px; }
+
+/* Hamburger Button */
+.menu-toggle {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+}
+
+/* Side Drawer Styling */
+.side-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen */
+    width: 280px;
+    height: 100vh;
+    background-color: #111;
+    z-index: 1001;
+    transition: 0.4s ease;
+    padding: 20px;
+}
+
+.side-drawer.active { right: 0; }
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.close-btn { font-size: 2rem; cursor: pointer; }
+
+.drawer-links {
+    list-style: none;
+    margin-top: 30px;
+}
+
+.drawer-links li { margin: 20px 0; }
+.logo{
+    display: flex;
+    align-items: center;
+}
+.logo span{
+    margin-left: 12px;
+}
+.drawer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+}
+
+/* Responsive Logic: 780px */
+@media (max-width: 780px) {
+    .nav-links { display: none; } /* Hide desktop links */
+    .menu-toggle { display: flex; } /* Show hamburger */
+    
+    /* Adjust Hero Slider margin to account for fixed header */
+    .hero-slider { margin-top: 70px; }
+}
+/* ================= FOOTER ================= */
+
+.main-footer {
+    background-color: #0b0b0b;
+    color: #ccc;
+    padding: 60px 20px 30px;
+    font-size: 0.9rem;
+}
+/* Reveal animation base */
+.reveal-footer {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.reveal-footer.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+.footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column  h4::after{
+       content: "";
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+}
+
+.footer-column p {
+    line-height: 1.6;
+    color: #aaa;
+}
+
+.footer-column ul {
+   
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+      list-style: none;
+       list-style: none; text-decoration: none;   
+}
+.footer-column ul li a{
+     color: #fff;
+    
+       list-style: none; text-decoration: none;   
+
+}
+.footer-column ul li a::after {
+  color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+      list-style: none;
+}
+
+.footer-column ul li a:hover::after{
+    color: #fff;
+}
+
+/* Divider */
+.footer-divider {
+    height: 1px;
+    background-color: #222;
+    margin: 50px auto 30px;
+    max-width: 1200px;
+}
+
+/* Bottom Section */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.footer-text {
+    font-size: 0.85rem;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+/* Social Icons */
+.footer-socials span {
+    display: inline-block;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #aaa;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials span:hover {
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* Copyright */
+.footer-copy {
+    text-align: center;
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 20px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-socials span {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+:root {
+    --iccib-navy: #1a2a44;
+    --iccib-gold: #ffcc00;
+}
+
+.chat-wrapper {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    font-family: 'Helvetica', Arial, sans-serif;
+}
+
+/* The Main Icon Trigger */
+.main-chat-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--iccib-navy);
+    border: 3px solid var(--iccib-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+       animation: bounce 2s infinite;
+}
+
+.main-chat-icon:hover {
+    transform: scale(1.1);
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0);}
+    50% { transform: translateY(-5px);}
+}
+.online {
+    position: absolute;
+    top: -5px;   /* moves above the icon */
+    right: 3px; /* moves outside right corner */
+    width: 14px;
+    height: 14px;
+    background-color: #4caf50; /* bright green */
+    border: 2px solid white;   /* white border around dot */
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4caf50; /* glow effect */
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+/* Preview Box (Hidden initially) */
+.chat-preview-box {
+    position: absolute;
+    bottom: 90px;
+    right: 0;
+    width: 350px;
+    background: #f4f7f9;
+    border-radius: 25px;
+    border: 2px solid var(--iccib-gold);
+    overflow: hidden;
+    display: none; /* JS will toggle this to 'block' */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    animation: popIn 0.4s ease-out;
+}
+
+.preview-header {
+    background: var(--iccib-navy);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-dot {
+    height: 10px;
+    width: 10px;
+    background: #00ff00;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+#close-preview {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.preview-body {
+    padding: 30px 20px;
+}
+
+.bot-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+    margin-left: 45px;
+}
+
+.message-bubble {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin-left: 45px;
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+/* The Gold Stripe on the left of message */
+.message-bubble::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    background: var(--iccib-gold);
+    border-radius: 5px;
+}
+
+.preview-footer {
+    padding: 15px;
+    background: white;
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    border-top: 1px solid #eee;
+}
+
+.fake-input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.send-btn {
+    background: var(--iccib-navy);
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 5px;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
+<script>
+const footerElements = document.querySelectorAll('.reveal-footer');
+
+const footerObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, { threshold: 0.2 });
+
+footerElements.forEach(el => footerObserver.observe(el));
+</script>
+
+<script>
+    let currentStep = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slides.length;
+
+// Function to change slide
+function showSlide(index) {
+    // Remove active class from all
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    // Add active class to target
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    
+    currentStep = index;
+}
+
+// Next Slide Logic
+function nextSlide() {
+    let next = (currentStep + 1) % totalSlides;
+    showSlide(next);
+}
+
+// Manual control from dots
+function currentSlide(index) {
+    showSlide(index);
+    resetTimer(); // Restart timer if user clicks
+}
+
+// Auto Play Timer (5 seconds)
+let slideTimer = setInterval(nextSlide, 5000);
+
+function resetTimer() {
+    clearInterval(slideTimer);
+    slideTimer = setInterval(nextSlide, 5000);
+}
+document.querySelectorAll('.info-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.querySelector('img').style.transform = 'scale(1.05)';
+        card.querySelector('img').style.transition = 'transform 0.5s ease';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.querySelector('img').style.transform = 'scale(1)';
+    });
+});
+// Subtle scale effect for the action icons
+const items = document.querySelectorAll('.action-item');
+
+items.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        item.style.transform = 'scale(1.05)';
+        item.style.transition = '0.3s ease';
+    });
+    item.addEventListener('mouseleave', () => {
+        item.style.transform = 'scale(1)';
+    });
+    
+    // Simple click handler placeholder
+    item.addEventListener('click', () => {
+        const text = item.querySelector('p').innerText;
+        console.log(`Navigating to: ${text}`);
+    });
+});
+// Adding a subtle ripple effect or click tracking for the actions
+document.querySelectorAll('.action-card, .media-card').forEach(element => {
+    element.addEventListener('click', function() {
+        this.style.opacity = '0.7';
+        setTimeout(() => this.style.opacity = '1', 100);
+        
+        // Logic for navigation
+        console.log("Navigating to section...");
+    });
+});
+const menuBtn = document.getElementById('mobile-menu-btn');
+const closeBtn = document.getElementById('close-drawer');
+const sideDrawer = document.getElementById('side-drawer');
+
+// Open Menu
+menuBtn.addEventListener('click', () => {
+    sideDrawer.classList.add('active');
+});
+
+// Close Menu
+closeBtn.addEventListener('click', () => {
+    sideDrawer.classList.remove('active');
+});
+
+// Close when clicking outside the drawer
+window.addEventListener('click', (e) => {
+    if (e.target === sideDrawer) {
+        sideDrawer.classList.remove('active');
+    }
+});
+const reveals = document.querySelectorAll('.reveal');
+
+const revealOnScroll = () => {
+    reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+            el.classList.add('active');
+        }
+    });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+document.addEventListener('DOMContentLoaded', () => {
+    const chatIcon = document.getElementById('chat-icon-trigger');
+    const previewBox = document.getElementById('chat-preview');
+    const closeBtn = document.getElementById('close-preview');
+    const previewForm = document.getElementById('preview-form');
+    const userInput = document.getElementById('user-input');
+    const messageContainer = document.getElementById('preview-messages');
+
+    // 1. Toggle Visibility
+    chatIcon.addEventListener('click', () => {
+        previewBox.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        previewBox.style.display = 'none';
+    });
+
+
+previewForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const message = userInput.value.trim();
+    if (message === '') return;
+
+    // Redirect to chat page and send message as URL param
+    window.location.href = `chatroom.html?message=${encodeURIComponent(message)}`;
+});
+
+   
+  
+});
+</script>
