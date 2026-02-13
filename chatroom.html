@@ -352,7 +352,12 @@ function loadPreviousMessages(){
 }
 
 loadPreviousMessages();
+const params = new URLSearchParams(window.location.search);
+const initialMessage = params.get("message");
 
+if(initialMessage){
+  appendMessage(initialMessage,"user");
+  }
 
 // ===============================
 // SEND MESSAGE (USER → ADMIN)
@@ -401,5 +406,6 @@ setInterval(()=>{
   </script>
 </body>
 </html>
+
 
 
