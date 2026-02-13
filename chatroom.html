@@ -261,7 +261,7 @@ Hello. How can the Bureau assist your investigation today?
 </main>
 
 <script>
-const guestId="Guest_"+Math.random().toString(36).substr(2,9);
+
 
 const chatBox=document.getElementById("chat-box");
 const messageForm=document.getElementById("message-form");
@@ -273,56 +273,87 @@ const closeSidebar=document.getElementById("closeSidebar");
 
 menuBtn.onclick=()=>sidebar.classList.add("active");
 closeSidebar.onclick=()=>sidebar.classList.remove("active");
+let guestId = localStorage.getItem("guestId");
 
+if(!guestId){
+  guestId = "Guest_" + Math.random().toString(36).substr(2,9);
+  localStorage.setItem("guestId", guestId);
+}
+
+
+// ===============================
+// APPEND MESSAGE UI
+// ===============================
 function appendMessage(text,type){
-const div=document.createElement("div");
-div.className=`msg ${type}`;
-div.textContent=text;
-chatBox.appendChild(div);
-chatBox.scrollTop=chatBox.scrollHeight;
+  const div=document.createElement("div");
+  div.className=`msg ${type}`;
+  div.textContent=text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-// ===== URL MESSAGE =====
-const params=new URLSearchParams(window.location.search);
-const initialMessage=params.get('message');
-
-if(initialMessage){
-appendMessage(initialMessage,'bot');
-saveMessage(initialMessage,"guest");
-}
-
-// ===== SAVE MESSAGE =====
+// ===============================
+// SAVE MESSAGE
+// ===============================
 function saveMessage(text,from){
-let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
-msgs.push({guestId,text,from});
-localStorage.setItem("chat_messages",JSON.stringify(msgs));
+
+  let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
+
+  msgs.push({
+    id: Date.now()+Math.random(),
+    guestId,
+    text,
+    from,
+    shown_user:false,
+    shown_admin:false
+  });
+
+  localStorage.setItem("chat_messages", JSON.stringify(msgs));
 }
 
-// ===== SEND =====
+// ===============================
+// SEND MESSAGE (USER → ADMIN)
+// ===============================
 messageForm.addEventListener("submit",(e)=>{
-e.preventDefault();
-const text=msgInput.value.trim();
-if(text){
-appendMessage(text,'bot');
-saveMessage(text,"guest");
-msgInput.value="";
-}
+  e.preventDefault();
+
+  const text = msgInput.value.trim();
+  if(!text) return;
+
+  appendMessage(text,"user"); // user bubble
+  saveMessage(text,"guest");
+
+  msgInput.value="";
 });
 
-// ===== CHECK ADMIN REPLIES FAST =====
+// ===============================
+// RECEIVE ADMIN REPLIES
+// ===============================
 setInterval(()=>{
-let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
 
-msgs.forEach(m=>{
-if(m.guestId===guestId && m.from==="admin" && !m.shown_user){
-appendMessage(m.text,"user");
-m.shown_user=true;
-}
-});
+  let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
 
-localStorage.setItem("chat_messages",JSON.stringify(msgs));
+  let updated=false;
+
+  msgs.forEach(m=>{
+    if(
+      m.guestId===guestId &&
+      m.from==="admin" &&
+      !m.shown_user
+    ){
+      appendMessage(m.text,"bot"); // admin bubble
+      m.shown_user=true;
+      updated=true;
+    }
+  });
+
+  if(updated){
+    localStorage.setItem("chat_messages",JSON.stringify(msgs));
+  }
 
 },500);
+
 </script>
 </body>
 </html>
+
