@@ -260,112 +260,87 @@ Hello. How can the Bureau assist your investigation today?
 
 </main>
 
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCturcbIFfEI8i2Vmn8VXWRtuuHpjM4CmM",
-    authDomain: "chat-ea2f3.firebaseapp.com",
-    projectId: "chat-ea2f3",
-    storageBucket: "chat-ea2f3.firebasestorage.app",
-    messagingSenderId: "184828903668",
-    appId: "1:184828903668:web:81bbbeb1c30d71e50c5ea1",
-    measurementId: "G-5CKHZWYSKS"
-  };
+// ---------------- FIREBASE ----------------
+const firebaseConfig = {
+  apiKey: "AIzaSyCturcbIFfEI8i2Vmn8VXWRtuuHpjM4CmM",
+  authDomain: "chat-ea2f3.firebaseapp.com",
+  projectId: "chat-ea2f3",
+  storageBucket: "chat-ea2f3.firebasestorage.app",
+  messagingSenderId: "184828903668",
+  appId: "1:184828903668:web:81bbbeb1c30d71e50c5ea1",
+  measurementId: "G-5CKHZWYSKS"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+// ---------------- VARIABLES ----------------
+const sidebar = document.getElementById("sidebar");
+const menuBtn = document.getElementById("menuBtn");
+const closeSidebar = document.getElementById("closeSidebar");
+const chatBox = document.getElementById("chat-box");
+const input = document.getElementById("message-input");
+const sendBtn = document.getElementById("send-btn");
 
-  // ===============================
-  // ELEMENTS
-  // ===============================
-  const chatBox = document.getElementById("chat-box");
-  const messageForm = document.getElementById("message-form");
-  const msgInput = document.getElementById("msg-input");
+// Sidebar toggle
+if(menuBtn) menuBtn.onclick = () => sidebar.classList.add("active");
+if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
 
-  const sidebar = document.getElementById("sidebar");
-  const menuBtn = document.getElementById("menuBtn");
-  const closeSidebar = document.getElementById("closeSidebar");
+// Guest ID
+let guestId = localStorage.getItem("guestId");
+if(!guestId){
+  guestId = "guest_" + Date.now() + "_" + Math.floor(Math.random()*1000);
+  localStorage.setItem("guestId", guestId);
+}
 
-  if(menuBtn) menuBtn.onclick = () => sidebar.classList.add("active");
-  if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
+// ---------------- APPEND MESSAGE ----------------
+function appendMessage(text, type){
+  const div = document.createElement("div");
+  div.className = `msg ${type}`;
+  div.textContent = text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-  // ===============================
-  // CREATE PERMANENT USER ID
-  // ===============================
-  let guestId = localStorage.getItem("guestId");
-  if(!guestId){
-    guestId = "Guest_" + Math.random().toString(36).substr(2,9);
-    localStorage.setItem("guestId", guestId);
-  }
+// ---------------- SEND MESSAGE ----------------
+sendBtn.addEventListener("click", async ()=>{
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = "";
+  appendMessage(text,"user");
 
-  // ===============================
-  // APPEND MESSAGE
-  // ===============================
-  function appendMessage(text,type){
-    const div = document.createElement("div");
-    div.className = `msg ${type}`;
-    div.textContent = text;
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  // ===============================
-  // SEND MESSAGE
-  // ===============================
-  messageForm.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const text = msgInput.value.trim();
-    if(!text) return;
-
-    appendMessage(text,"user");
-
-    await addDoc(collection(db,"messages"),{
-      guestId,
-      text,
-      from:"guest",
-      timestamp: serverTimestamp()
-    });
-
-    msgInput.value="";
+  await addDoc(collection(db,"messages"),{
+    guestId,
+    text,
+    from:"guest",
+    timestamp: serverTimestamp()
   });
+});
 
-  // ===============================
-  // LOAD PREVIOUS MESSAGES IN REAL-TIME
-  // ===============================
-  const msgsQuery = query(
-    collection(db,"messages"),
-    where("guestId","==",guestId),
-    orderBy("timestamp")
-  );
-
-  onSnapshot(msgsQuery, snapshot=>{
-    chatBox.innerHTML = "";
-    snapshot.forEach(doc=>{
-      const m = doc.data();
-      if(m.from === "guest") appendMessage(m.text,"user");
-      if(m.from === "admin") appendMessage(m.text,"bot");
-    });
+// ---------------- LOAD MESSAGES REAL-TIME ----------------
+const msgsQuery = query(collection(db,"messages"), orderBy("timestamp"));
+onSnapshot(msgsQuery, snapshot=>{
+  chatBox.innerHTML = "";
+  snapshot.docs.forEach(doc=>{
+    const m = doc.data();
+    if(m.guestId !== guestId) return;
+    appendMessage(m.text, m.from==="guest"?"user":"admin");
   });
+});
 
-  // ===============================
-  // INITIAL MESSAGE FROM URL (index.html)
-  // ===============================
-  const params = new URLSearchParams(window.location.search);
-  const initialMessage = params.get("message");
-  if(initialMessage){
-    appendMessage(initialMessage,"user");
-    addDoc(collection(db,"messages"),{
-      guestId,
-      text: initialMessage,
-      from:"guest",
-      timestamp: serverTimestamp()
-    });
-  }
-</script>
+// ---------------- INITIAL MESSAGE FROM URL ----------------
+const params = new URLSearchParams(window.location.search);
+const initialMessage = params.get("message");
+if(initialMessage){
+  appendMessage(initialMessage,"admin");
+}
+  </script>
 </body>
 </html>
+
 
 
 
