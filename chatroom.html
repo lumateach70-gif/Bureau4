@@ -262,17 +262,27 @@ Hello. How can the Bureau assist your investigation today?
 
 <script>
 
+// ===============================
+// ELEMENTS
+// ===============================
+const chatBox = document.getElementById("chat-box");
+const messageForm = document.getElementById("message-form");
+const msgInput = document.getElementById("msg-input");
 
-const chatBox=document.getElementById("chat-box");
-const messageForm=document.getElementById("message-form");
-const msgInput=document.getElementById("msg-input");
+const sidebar = document.getElementById("sidebar");
+const menuBtn = document.getElementById("menuBtn");
+const closeSidebar = document.getElementById("closeSidebar");
 
-const sidebar=document.getElementById("sidebar");
-const menuBtn=document.getElementById("menuBtn");
-const closeSidebar=document.getElementById("closeSidebar");
+// ===============================
+// SIDEBAR TOGGLE (SAFE)
+// ===============================
+if(menuBtn) menuBtn.onclick = () => sidebar.classList.add("active");
+if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
 
-menuBtn.onclick=()=>sidebar.classList.add("active");
-closeSidebar.onclick=()=>sidebar.classList.remove("active");
+
+// ===============================
+// CREATE PERMANENT USER ID
+// ===============================
 let guestId = localStorage.getItem("guestId");
 
 if(!guestId){
@@ -282,15 +292,18 @@ if(!guestId){
 
 
 // ===============================
-// APPEND MESSAGE UI
+// APPEND MESSAGE TO UI
 // ===============================
 function appendMessage(text,type){
-  const div=document.createElement("div");
-  div.className=`msg ${type}`;
-  div.textContent=text;
+
+  const div = document.createElement("div");
+  div.className = `msg ${type}`;
+  div.textContent = text;
+
   chatBox.appendChild(div);
-  chatBox.scrollTop=chatBox.scrollHeight;
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
+
 
 // ===============================
 // SAVE MESSAGE
@@ -300,7 +313,7 @@ function saveMessage(text,from){
   let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
 
   msgs.push({
-    id: Date.now()+Math.random(),
+    id: Date.now() + Math.random(),
     guestId,
     text,
     from,
@@ -311,6 +324,36 @@ function saveMessage(text,from){
   localStorage.setItem("chat_messages", JSON.stringify(msgs));
 }
 
+
+// ===============================
+// LOAD OLD CHAT AFTER REFRESH ✅
+// ===============================
+function loadPreviousMessages(){
+
+  let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
+
+  msgs.forEach(m => {
+
+    if(m.guestId !== guestId) return;
+
+    if(m.from === "guest"){
+      appendMessage(m.text,"user");
+      m.shown_user = true;
+    }
+
+    if(m.from === "admin"){
+      appendMessage(m.text,"bot");
+      m.shown_user = true;
+    }
+
+  });
+
+  localStorage.setItem("chat_messages", JSON.stringify(msgs));
+}
+
+loadPreviousMessages();
+
+
 // ===============================
 // SEND MESSAGE (USER → ADMIN)
 // ===============================
@@ -320,40 +363,43 @@ messageForm.addEventListener("submit",(e)=>{
   const text = msgInput.value.trim();
   if(!text) return;
 
-  appendMessage(text,"user"); // user bubble
+  appendMessage(text,"user");
   saveMessage(text,"guest");
 
   msgInput.value="";
 });
 
+
 // ===============================
-// RECEIVE ADMIN REPLIES
+// RECEIVE ADMIN REPLIES (LIVE)
 // ===============================
 setInterval(()=>{
 
   let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
+  let updated = false;
 
-  let updated=false;
+  msgs.forEach(m => {
 
-  msgs.forEach(m=>{
     if(
-      m.guestId===guestId &&
-      m.from==="admin" &&
+      m.guestId === guestId &&
+      m.from === "admin" &&
       !m.shown_user
     ){
-      appendMessage(m.text,"bot"); // admin bubble
-      m.shown_user=true;
-      updated=true;
+      appendMessage(m.text,"bot");
+      m.shown_user = true;
+      updated = true;
     }
+
   });
 
   if(updated){
-    localStorage.setItem("chat_messages",JSON.stringify(msgs));
+    localStorage.setItem("chat_messages", JSON.stringify(msgs));
   }
 
 },500);
 
-</script>
+  </script>
 </body>
 </html>
+
 
