@@ -308,7 +308,31 @@ div.onclick=()=>selectGuest(id,div);
 guestListDiv.appendChild(div);
 });
 }
+function loadConversation(guestId){
 
+  chatBox.innerHTML="";
+
+  let msgs = JSON.parse(
+    localStorage.getItem("chat_messages") || "[]"
+  );
+
+  msgs.forEach(m=>{
+
+    if(m.guestId !== guestId) return;
+
+    if(m.from === "guest"){
+      appendMessage(m.text,"user");
+      m.shown_admin = true;
+    }
+
+    if(m.from === "admin"){
+      appendMessage(m.text,"admin");
+    }
+
+  });
+
+  localStorage.setItem("chat_messages",JSON.stringify(msgs));
+}
 // ===== SELECT =====
 function selectGuest(id,element){
 selectedGuestId=id;
@@ -317,8 +341,7 @@ document.getElementById("current-user-label").textContent=`Chatting with: ${id}`
 
 document.querySelectorAll('.guest-item').forEach(el=>el.classList.remove('active'));
 if(element)element.classList.add('active');
-}
-
+  }
 // ===== SEND =====
 adminForm.addEventListener("submit",(e)=>{
 e.preventDefault();
@@ -329,7 +352,14 @@ if(text && selectedGuestId){
 appendMessage(text,"admin");
 
 let msgs=JSON.parse(localStorage.getItem("chat_messages")||"[]");
-msgs.push({guestId:selectedGuestId,text,from:"admin"});
+msgs.push({
+  id: Date.now()+Math.random(),
+  guestId:selectedGuestId,
+  text,
+  from:"admin",
+  shown_user:false,
+  shown_admin:true
+});
 localStorage.setItem("chat_messages",JSON.stringify(msgs));
 
 adminInput.value="";
@@ -363,3 +393,4 @@ document.getElementById("closeSidebar").onclick=()=>sidebar.classList.remove("ac
 </script>
 </body>
 </html>
+
