@@ -277,140 +277,113 @@ Secure Encrypted Admin Channel
 
 </main>
 
-<script type="module">
-  // ===============================
-  // FIREBASE SETUP
-  // ===============================
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCturcbIFfEI8i2Vmn8VXWRtuuHpjM4CmM",
-    authDomain: "chat-ea2f3.firebaseapp.com",
-    projectId: "chat-ea2f3",
-    storageBucket: "chat-ea2f3.firebasestorage.app",
-    messagingSenderId: "184828903668",
-    appId: "1:184828903668:web:81bbbeb1c30d71e50c5ea1",
-    measurementId: "G-5CKHZWYSKS"
-  };
+// ---------------- FIREBASE ----------------
+const firebaseConfig = {
+  apiKey: "AIzaSyCturcbIFfEI8i2Vmn8VXWRtuuHpjM4CmM",
+  authDomain: "chat-ea2f3.firebaseapp.com",
+  projectId: "chat-ea2f3",
+  storageBucket: "chat-ea2f3.firebasestorage.app",
+  messagingSenderId: "184828903668",
+  appId: "1:184828903668:web:81bbbeb1c30d71e50c5ea1",
+  measurementId: "G-5CKHZWYSKS"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+// ---------------- ELEMENTS ----------------
+const sidebar = document.getElementById("sidebar");
+const menuToggle = document.getElementById("menuToggle");
+const closeSidebar = document.getElementById("closeSidebar");
+const guestListDiv = document.getElementById("guest-list");
+const chatBox = document.getElementById("chat-box");
+const input = document.getElementById("admin-input");
+const sendBtn = document.getElementById("send-btn");
+const currentUserLabel = document.getElementById("current-user");
 
-  // ===============================
-  // ELEMENTS
-  // ===============================
-  const chatBox = document.getElementById("admin-chat-box");
-  const adminForm = document.getElementById("admin-form");
-  const adminInput = document.getElementById("admin-input");
-  const guestListDiv = document.getElementById("guest-list");
+// Sidebar toggle
+if(menuToggle) menuToggle.onclick = () => sidebar.classList.add("active");
+if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
 
-  const sidebar = document.getElementById("sidebar");
-  const menuToggle = document.getElementById("menuToggle");
-  const closeSidebar = document.getElementById("closeSidebar");
+// ---------------- VARIABLES ----------------
+let selectedGuest = null;
+let guests = [];
+let listeners = {};
 
-  if(menuToggle) menuToggle.onclick = () => sidebar.classList.add("active");
-  if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
+// ---------------- APPEND MESSAGE ----------------
+function appendMessage(text, type){
+  const div = document.createElement("div");
+  div.className = `msg ${type}`;
+  div.textContent = text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-  // ===============================
-  // VARIABLES
-  // ===============================
-  let selectedGuestId = null;
-  let guests = [];
-
-  // ===============================
-  // APPEND MESSAGE TO CHAT BOX
-  // ===============================
-  function appendMessage(text, type){
+// ---------------- UPDATE GUEST LIST ----------------
+function updateGuestList(){
+  guestListDiv.innerHTML = "";
+  guests.forEach(guestId=>{
     const div = document.createElement("div");
-    div.className = `msg ${type}`;
-    div.textContent = text;
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  // ===============================
-  // LOAD GUEST LIST
-  // ===============================
-  function updateGuestList(){
-    guestListDiv.innerHTML = "";
-    guests.forEach(id=>{
-      const div = document.createElement("div");
-      div.className = "guest-item";
-      div.innerHTML = `<span>${id}</span><div class="status-online"></div>`;
-      div.onclick = () => selectGuest(id, div);
-      guestListDiv.appendChild(div);
-    });
-  }
-
-  // ===============================
-  // SELECT A GUEST
-  // ===============================
-  function selectGuest(id, element){
-    selectedGuestId = id;
-    chatBox.innerHTML = "";
-    document.getElementById("current-user-label").textContent = `Chatting with: ${id}`;
-
-    document.querySelectorAll('.guest-item').forEach(el=>el.classList.remove('active'));
-    if(element) element.classList.add('active');
-
-    // Load this guest's conversation
-    loadConversation(id);
-  }
-
-  // ===============================
-  // LOAD CONVERSATION WITH GUEST
-  // ===============================
-  function loadConversation(guestId){
-    chatBox.innerHTML = "";
-
-    const msgsQuery = query(
-      collection(db,"messages"),
-      where("guestId","==",guestId),
-      orderBy("timestamp")
-    );
-
-    onSnapshot(msgsQuery, snapshot=>{
-      chatBox.innerHTML = "";
-      snapshot.forEach(doc=>{
-        const m = doc.data();
-        if(m.from === "guest") appendMessage(m.text,"user");
-        if(m.from === "admin") appendMessage(m.text,"admin");
-      });
-    });
-  }
-
-  // ===============================
-  // SEND MESSAGE (ADMIN → USER)
-  // ===============================
-  adminForm.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const text = adminInput.value.trim();
-    if(!text || !selectedGuestId) return;
-
-    appendMessage(text,"admin");
-
-    await addDoc(collection(db,"messages"),{
-      guestId: selectedGuestId,
-      text,
-      from:"admin",
-      timestamp: serverTimestamp()
-    });
-
-    adminInput.value="";
+    div.className = "guest-item";
+    div.textContent = guestId;
+    div.onclick = ()=> selectGuest(guestId, div);
+    if(guestId === selectedGuest) div.classList.add("active");
+    guestListDiv.appendChild(div);
   });
+}
 
-  // ===============================
-  // LOAD ALL GUESTS IN REAL-TIME
-  // ===============================
-  const guestsQuery = query(collection(db,"messages"), orderBy("timestamp"));
-  onSnapshot(guestsQuery, snapshot=>{
-    const allMsgs = snapshot.docs.map(d => d.data());
-    guests = [...new Set(allMsgs.map(m => m.guestId))];
-    updateGuestList();
+// ---------------- SELECT GUEST ----------------
+function selectGuest(guestId, element){
+  selectedGuest = guestId;
+  chatBox.innerHTML = "";
+  currentUserLabel.textContent = `Chatting with: ${guestId}`;
+
+  document.querySelectorAll('.guest-item').forEach(el=>el.classList.remove('active'));
+  if(element) element.classList.add('active');
+
+  // unsubscribe previous listener
+  if(listeners[guestId]) listeners[guestId]();
+
+  // listen to messages for this guest
+  const msgsQuery = query(collection(db,"messages"), orderBy("timestamp"));
+  listeners[guestId] = onSnapshot(msgsQuery, snapshot=>{
+    chatBox.innerHTML = "";
+    snapshot.docs.forEach(doc=>{
+      const m = doc.data();
+      if(m.guestId !== guestId) return;
+      appendMessage(m.text, m.from==="guest"?"user":"admin");
+    });
   });
-</script>
+}
+
+// ---------------- SEND MESSAGE ----------------
+sendBtn.addEventListener("click", async ()=>{
+  const text = input.value.trim();
+  if(!text || !selectedGuest) return;
+  input.value = "";
+  appendMessage(text,"admin");
+
+  await addDoc(collection(db,"messages"),{
+    guestId: selectedGuest,
+    text,
+    from:"admin",
+    timestamp: new Date()
+  });
+});
+
+// ---------------- LOAD GUESTS REAL-TIME ----------------
+const guestsQuery = query(collection(db,"messages"), orderBy("timestamp"));
+onSnapshot(guestsQuery, snapshot=>{
+  const allMsgs = snapshot.docs.map(d=>d.data());
+  guests = [...new Set(allMsgs.map(m=>m.guestId))];
+  updateGuestList();
+});
+  </script>
 </body>
 </html>
+
 
 
