@@ -260,152 +260,122 @@ Hello. How can the Bureau assist your investigation today?
 
 </main>
 
-<script>
+<script type="module">
+  // ===============================
+  // FIREBASE SETUP
+  // ===============================
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-// ===============================
-// ELEMENTS
-// ===============================
-const chatBox = document.getElementById("chat-box");
-const messageForm = document.getElementById("message-form");
-const msgInput = document.getElementById("msg-input");
+  const firebaseConfig = {
+    apiKey: "AIzaSyCturcbIFfEI8i2Vmn8VXWRtuuHpjM4CmM",
+    authDomain: "chat-ea2f3.firebaseapp.com",
+    projectId: "chat-ea2f3",
+    storageBucket: "chat-ea2f3.firebasestorage.app",
+    messagingSenderId: "184828903668",
+    appId: "1:184828903668:web:81bbbeb1c30d71e50c5ea1",
+    measurementId: "G-5CKHZWYSKS"
+  };
 
-const sidebar = document.getElementById("sidebar");
-const menuBtn = document.getElementById("menuBtn");
-const closeSidebar = document.getElementById("closeSidebar");
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-// ===============================
-// SIDEBAR TOGGLE (SAFE)
-// ===============================
-if(menuBtn) menuBtn.onclick = () => sidebar.classList.add("active");
-if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
+  // ===============================
+  // ELEMENTS
+  // ===============================
+  const chatBox = document.getElementById("chat-box");
+  const messageForm = document.getElementById("message-form");
+  const msgInput = document.getElementById("msg-input");
 
+  const sidebar = document.getElementById("sidebar");
+  const menuBtn = document.getElementById("menuBtn");
+  const closeSidebar = document.getElementById("closeSidebar");
 
-// ===============================
-// CREATE PERMANENT USER ID
-// ===============================
-let guestId = localStorage.getItem("guestId");
+  if(menuBtn) menuBtn.onclick = () => sidebar.classList.add("active");
+  if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
 
-if(!guestId){
-  guestId = "Guest_" + Math.random().toString(36).substr(2,9);
-  localStorage.setItem("guestId", guestId);
-}
-
-
-// ===============================
-// APPEND MESSAGE TO UI
-// ===============================
-function appendMessage(text,type){
-
-  const div = document.createElement("div");
-  div.className = `msg ${type}`;
-  div.textContent = text;
-
-  chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-
-// ===============================
-// SAVE MESSAGE
-// ===============================
-function saveMessage(text,from){
-
-  let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
-
-  msgs.push({
-    id: Date.now() + Math.random(),
-    guestId,
-    text,
-    from,
-    shown_user:false,
-    shown_admin:false
-  });
-
-  localStorage.setItem("chat_messages", JSON.stringify(msgs));
-}
-
-
-// ===============================
-// LOAD OLD CHAT AFTER REFRESH ✅
-// ===============================
-function loadPreviousMessages(){
-
-  let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
-
-  msgs.forEach(m => {
-
-    if(m.guestId !== guestId) return;
-
-    if(m.from === "guest"){
-      appendMessage(m.text,"user");
-      m.shown_user = true;
-    }
-
-    if(m.from === "admin"){
-      appendMessage(m.text,"bot");
-      m.shown_user = true;
-    }
-
-  });
-
-  localStorage.setItem("chat_messages", JSON.stringify(msgs));
-}
-
-loadPreviousMessages();
-const params = new URLSearchParams(window.location.search);
-const initialMessage = params.get("message");
-
-if(initialMessage){
-  appendMessage(initialMessage,"user");
+  // ===============================
+  // GUEST ID (PERMANENT)
+  // ===============================
+  let guestId = localStorage.getItem("guestId");
+  if(!guestId){
+    guestId = "Guest_" + Math.random().toString(36).substr(2,9);
+    localStorage.setItem("guestId", guestId);
   }
 
-// ===============================
-// SEND MESSAGE (USER → ADMIN)
-// ===============================
-messageForm.addEventListener("submit",(e)=>{
-  e.preventDefault();
-
-  const text = msgInput.value.trim();
-  if(!text) return;
-
-  appendMessage(text,"user");
-  saveMessage(text,"guest");
-
-  msgInput.value="";
-});
-
-
-// ===============================
-// RECEIVE ADMIN REPLIES (LIVE)
-// ===============================
-setInterval(()=>{
-
-  let msgs = JSON.parse(localStorage.getItem("chat_messages") || "[]");
-  let updated = false;
-
-  msgs.forEach(m => {
-
-    if(
-      m.guestId === guestId &&
-      m.from === "admin" &&
-      !m.shown_user
-    ){
-      appendMessage(m.text,"bot");
-      m.shown_user = true;
-      updated = true;
-    }
-
-  });
-
-  if(updated){
-    localStorage.setItem("chat_messages", JSON.stringify(msgs));
+  // ===============================
+  // APPEND MESSAGE
+  // ===============================
+  function appendMessage(text,type){
+    const div = document.createElement("div");
+    div.className = `msg ${type}`;
+    div.textContent = text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-},500);
+  // ===============================
+  // SEND MESSAGE TO FIRESTORE
+  // ===============================
+  messageForm.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const text = msgInput.value.trim();
+    if(!text) return;
+
+    appendMessage(text,"user");
+
+    await addDoc(collection(db,"messages"),{
+      guestId,
+      text,
+      from:"guest",
+      timestamp: serverTimestamp()
+    });
+
+    msgInput.value="";
+  });
+
+  // ===============================
+  // LOAD PREVIOUS MESSAGES
+  // ===============================
+  function loadPreviousMessages(){
+    const msgsQuery = query(
+      collection(db,"messages"),
+      where("guestId","==",guestId),
+      orderBy("timestamp")
+    );
+
+    onSnapshot(msgsQuery, snapshot=>{
+      chatBox.innerHTML=""; // clear first
+      snapshot.forEach(doc=>{
+        const m = doc.data();
+        if(m.from === "guest") appendMessage(m.text,"user");
+        if(m.from === "admin") appendMessage(m.text,"bot");
+      });
+    });
+  }
+
+  loadPreviousMessages();
+
+  // ===============================
+  // HANDLE MESSAGE FROM URL PARAM
+  // ===============================
+  const params = new URLSearchParams(window.location.search);
+  const initialMessage = params.get("message");
+  if(initialMessage){
+    appendMessage(initialMessage,"user");
+    addDoc(collection(db,"messages"),{
+      guestId,
+      text: initialMessage,
+      from:"guest",
+      timestamp: serverTimestamp()
+    });
+  }
 
   </script>
+  
 </body>
 </html>
+
 
 
 
