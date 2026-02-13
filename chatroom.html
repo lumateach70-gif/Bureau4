@@ -260,10 +260,7 @@ Hello. How can the Bureau assist your investigation today?
 
 </main>
 
-<script type="module">
-  // ===============================
-  // FIREBASE SETUP
-  // ===============================
+  <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
   import { getFirestore, collection, addDoc, onSnapshot, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
@@ -295,7 +292,7 @@ Hello. How can the Bureau assist your investigation today?
   if(closeSidebar) closeSidebar.onclick = () => sidebar.classList.remove("active");
 
   // ===============================
-  // GUEST ID (PERMANENT)
+  // CREATE PERMANENT USER ID
   // ===============================
   let guestId = localStorage.getItem("guestId");
   if(!guestId){
@@ -315,7 +312,7 @@ Hello. How can the Bureau assist your investigation today?
   }
 
   // ===============================
-  // SEND MESSAGE TO FIRESTORE
+  // SEND MESSAGE
   // ===============================
   messageForm.addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -335,29 +332,25 @@ Hello. How can the Bureau assist your investigation today?
   });
 
   // ===============================
-  // LOAD PREVIOUS MESSAGES
+  // LOAD PREVIOUS MESSAGES IN REAL-TIME
   // ===============================
-  function loadPreviousMessages(){
-    const msgsQuery = query(
-      collection(db,"messages"),
-      where("guestId","==",guestId),
-      orderBy("timestamp")
-    );
+  const msgsQuery = query(
+    collection(db,"messages"),
+    where("guestId","==",guestId),
+    orderBy("timestamp")
+  );
 
-    onSnapshot(msgsQuery, snapshot=>{
-      chatBox.innerHTML=""; // clear first
-      snapshot.forEach(doc=>{
-        const m = doc.data();
-        if(m.from === "guest") appendMessage(m.text,"user");
-        if(m.from === "admin") appendMessage(m.text,"bot");
-      });
+  onSnapshot(msgsQuery, snapshot=>{
+    chatBox.innerHTML = "";
+    snapshot.forEach(doc=>{
+      const m = doc.data();
+      if(m.from === "guest") appendMessage(m.text,"user");
+      if(m.from === "admin") appendMessage(m.text,"bot");
     });
-  }
-
-  loadPreviousMessages();
+  });
 
   // ===============================
-  // HANDLE MESSAGE FROM URL PARAM
+  // INITIAL MESSAGE FROM URL (index.html)
   // ===============================
   const params = new URLSearchParams(window.location.search);
   const initialMessage = params.get("message");
@@ -370,11 +363,10 @@ Hello. How can the Bureau assist your investigation today?
       timestamp: serverTimestamp()
     });
   }
-
-  </script>
-  
+</script>
 </body>
 </html>
+
 
 
 
